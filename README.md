@@ -1,4 +1,4 @@
-[![test-workflow][test-badge]][test-workflow] [![test-workflow][size-badge]][test-workflow]
+[![test-workflow][test-badge]][test-workflow] [![coverage-workflow][coverage-badge]][coverage-report] [![test-workflow][size-badge]][test-workflow]
 
 # timerify
 
@@ -263,6 +263,9 @@ npm run test:coverage
 
 [test-badge]: https://github.com/nicholaswmin/automap/actions/workflows/test:unit.yml/badge.svg
 [test-workflow]: https://github.com/nicholaswmin/automap/actions/workflows/test:unit.yml
+
+[coverage-badge]: https://coveralls.io/repos/github/nicholaswmin/timerify/badge.svg?branch=main
+[coverage-report]: https://coveralls.io/github/nicholaswmin/timerify?branch=main
 
 [size-badge]: https://img.shields.io/badge/size-650%20bytes-kb.svg
 
