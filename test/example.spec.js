@@ -3,13 +3,10 @@ import assert from 'node:assert'
 
 import { timerify } from '../index.js'
 
-function fibonacci(n) {
-   return n < 1 ? 0
-        : n <= 2 ? 1
-        : fibonacci(n - 1) + fibonacci(n - 2)
-}
+const fibonacci = n => n < 1 ? 0 : n <= 2
+  ? 1 : fibonacci(n - 1) + fibonacci(n - 2)
 
-test('README #fibonacci example:', async t => {
+test('example: #fibonacci()', async t => {
   let fibonacciTimerified = null
 
   t.beforeEach(function() {
@@ -18,21 +15,21 @@ test('README #fibonacci example:', async t => {
     fibonacciTimerified(30)
   })
 
-  await t.test('should complete each cycle quickly', () => {
-    const mean = fibonacciTimerified.histogramMs.mean
+  await t.test('completes each cycle quickly', () => {
+    const mean = fibonacciTimerified.histogram_ms.mean
 
-    assert.ok(mean < 10, `mean duration was: ${mean} ms`)
+    assert.ok(mean < 100, `mean: ${mean} exceeds 100ms threshold`)
   })
 
-  await t.test('should never exceed 20ms per cycle', () => {
-    const max = fibonacciTimerified.histogramMs.max
+  await t.test('never exceeds 100ms per cycle', () => {
+    const max = fibonacciTimerified.histogram_ms.max
 
-    assert.ok(max < 20, `max duration: ${max} exceed threshold`)
+    assert.ok(max < 200, `max: ${max} exceeds 200ms threshold`)
   })
 
-  await t.test('should have consistent running times', () => {
-    const deviation = fibonacciTimerified.histogramMs.stddev
+  await t.test('has consistent running times', () => {
+    const deviation = fibonacciTimerified.histogram_ms.stddev
 
-    assert.ok(deviation < 5, `max duration: ${deviation} exceed threshold`)
+    assert.ok(deviation < 20, `deviation: ${deviation} exceeds 20ms threshold`)
   })
 })

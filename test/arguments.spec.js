@@ -3,15 +3,15 @@ import { test } from 'node:test'
 
 import { timerify } from '../index.js'
 
-await test('#instantiation()', async t => {
- await t.test('when no parameters are passed', async t => {
-   await t.test('throws "InvalidArgumentError" explaining the issue"', () => {
+await test('#timerify() arguments', async t => {
+ await t.test('no parameters are passed', async t => {
+   await t.test('throws "InvalidArgumentError"', () => {
       assert.throws(() => {
         timerify()
       }, { name: 'InvalidArgumentError' })
     })
 
-   await t.test('which also includes a descriptive message', () => {
+   await t.test('with a descriptive message', () => {
      assert.throws(() => timerify('foo'), {
        name: 'InvalidArgumentError',
        message: 'Expected an argument of type: "function", got: string'
@@ -19,14 +19,14 @@ await test('#instantiation()', async t => {
    })
   })
 
-  await t.test('when passed parameter is not a function', async t => {
+  await t.test('passed parameter is not a function', async t => {
     await t.test('throws "InvalidArgumentError"', () => {
       assert.throws(() => timerify('foo'), {
         name: 'InvalidArgumentError'
       })
     })
 
-    await t.test('which also includes a descriptive message', () => {
+    await t.test('with a descriptive message', () => {
       assert.throws(() => timerify('foo'), {
         name: 'InvalidArgumentError',
         message: 'Expected an argument of type: "function", got: string'
@@ -34,12 +34,12 @@ await test('#instantiation()', async t => {
     })
   })
 
-  await t.test('when passed parameter is a function', async t => {
+  await t.test('passed parameter is a function', async t => {
     await t.test('does not throw"', () => {
       assert.doesNotThrow(() =>  timerify(function fooBar() { }) )
     })
 
-    await t.test('when called', async t => {
+    await t.test('called', async t => {
       await t.test('returns its result', () => {
         const fn = function sayFoobar() {
           return 'foobar'

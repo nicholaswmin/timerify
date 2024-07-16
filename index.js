@@ -1,22 +1,53 @@
 import { createHistogram } from 'node:perf_hooks'
-import { isFunction } from './src/is-function.js'
+import { isFunction, isTimerifiedFunction } from './src/validate.js'
 
 const toDecimal = num => Math.round((num + Number.EPSILON) * 100) / 100
+
 const nanosToMs = nanos => toDecimal(nanos / 1e+6)
-const keysToMs = obj => (acc, key) => ({
-  ...acc,
-  [key]: isNaN(obj[key]) ? 0 : nanosToMs(obj[key])
-})
+
+const keysToMs = obj =>
+  (acc, key) => ({
+      ...acc,
+      [key]: isNaN(obj[key]) ? 0 : nanosToMs(obj[key])
+    })
+
+const toMsKeys = histogram =>
+  (acc, key) =>
+    ({ ...acc, [key + ' (ms)']: histogram[key] })
+
+const toPrintableRow = () =>
+  (acc, timerified) => ({
+    ... acc,
+    [timerified.name]: ['min', 'mean', 'max', 'stddev']
+        .reduce(toMsKeys(timerified.histogram_ms),
+          { count: timerified.histogram_ms.count }
+        )
+    })
+
+const toRows = timerified => {
+  return Array.isArray(timerified)
+    ? timerified.map(isTimerifiedFunction)
+      .reduce(toPrintableRow(), {})
+    : [isTimerifiedFunction(timerified)]
+      .reduce(toPrintableRow(), {})
+}
 
 const timerify = (fn, { histogram = createHistogram() } = {}) => {
   isFunction(fn)
 
   const timerified = performance.timerify(fn, { histogram })
+
   timerified.histogram = histogram
+
+  timerified.reset = () => {
+    timerified.histogram.reset()
+
+    return timerified
+  }
 
   Object.defineProperty(
       timerified,
-      'histogramMs', {
+      'histogram_ms', {
         get: function() {
           const histogram = timerified.histogram.toJSON()
 
@@ -31,9 +62,7 @@ const timerify = (fn, { histogram = createHistogram() } = {}) => {
       }
   )
 
-  timerified.reset = () => timerified.histogram.reset()
-
   return timerified
 }
 
-export { timerify }
+export { timerify, toRows }

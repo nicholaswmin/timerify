@@ -1,21 +1,21 @@
 {
-  "name": "timerify",
+  "name": "@nicholaswmin/timerify",
   "type": "module",
-  "version": "0.1.0",
-  "description": "tiny function for performance testing in unit tests",
+  "version": "0.2.1",
+  "description": "tiny utility for measuring function performance",
   "main": "index.js",
   "scripts": {
     "test": "NODE_ENV=test node --test test/index.spec.js",
-    "test:coverage": "NODE_ENV=test node --test --experimental-test-coverage --test-reporter=lcov --test-reporter-destination=lcov.info test/index.spec.js",
+    "test:coverage": "NODE_ENV=test node --test --experimental-test-coverage test/index.spec.js",
     "checks": "npx eslint && npm audit && npx size-limit"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=19"
   },
   "size-limit": [
     {
       "path": "index.js",
-      "limit": "1 kB",
+      "limit": "0.95 kB",
       "ignore": ["node:perf_hooks"]
     }
   ],
@@ -24,7 +24,7 @@
     "url": "git+https://github.com/nicholaswmin/timerify.git"
   },
   "keywords": [
-    "performance-api",
+    "performance-measurement-api",
     "perf-hooks",
     "tests",
     "unit-tests",

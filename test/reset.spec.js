@@ -3,14 +3,11 @@ import assert from 'node:assert'
 
 import { timerify } from '../index.js'
 
-function fibonacci(n) {
-   return n < 1 ? 0
-        : n <= 2 ? 1
-        : fibonacci(n - 1) + fibonacci(n - 2)
-}
+const fibonacci = n => n < 1 ? 0 : n <= 2
+  ? 1 : fibonacci(n - 1) + fibonacci(n - 2)
 
-test('#reset', async t => {
-  await t.test('when a timerified function runs', async t => {
+test('#reset()', async t => {
+  await t.test('a timerified function runs', async t => {
     let timerFn = null
 
     t.beforeEach(() => {
@@ -21,41 +18,47 @@ test('#reset', async t => {
     })
 
     await t.test('it logs a max (ms) value', () => {
-      const max = timerFn.histogramMs.max
+      const max = timerFn.histogram_ms.max
 
       assert.ok(max > 0, `max is: ${max} ms`)
     })
 
-    await t.test('when #timerified.reset() is called()', async t => {
+    await t.test('#timerified.reset() is called()', async t => {
+      let result = null
+
       t.beforeEach(() => {
-        timerFn.reset()
+        result = timerFn.reset()
       })
 
-      await t.test('zeros the captured durations', async t => {
-        await t.test('for nanoseconds', () => {
+      await t.test('zeroes the captured durations', async t => {
+        await t.test('of histogram', () => {
           const max = timerFn.histogram.max
 
           assert.strictEqual(max, 0)
         })
 
-        await t.test('for milliseconds', () => {
-          const max = timerFn.histogramMs.max
+        await t.test('of histogram_ms', () => {
+          const max = timerFn.histogram_ms.max
 
           assert.strictEqual(max, 0)
         })
 
-        await t.test('when function is run again:', async t => {
+        await t.test('function is run again:', async t => {
           t.beforeEach(() => {
             for (let i = 0; i < 10; i++)
               timerFn(20)
           })
 
           await t.test('it logs a max (ms) value', () => {
-            const max = timerFn.histogramMs.max
+            const max = timerFn.histogram_ms.max
 
             assert.ok(max > 0, `max is: ${max} ms`)
           })
         })
+      })
+
+      await t.test('returns the timerified function', () => {
+        assert.deepStrictEqual(result, timerFn)
       })
     })
   })

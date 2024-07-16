@@ -1,15 +1,12 @@
 import { test } from 'node:test'
 import assert from 'node:assert'
 
-import { timerify } from '../index.js'
+import { timerify } from '../../index.js'
 
-function fibonacci(n) {
-   return n < 1 ? 0
-        : n <= 2 ? 1
-        : fibonacci(n - 1) + fibonacci(n - 2)
-}
+const fibonacci = n => n < 1 ? 0 : n <= 2
+  ? 1 : fibonacci(n - 1) + fibonacci(n - 2)
 
-test('#timerify', async t => {
+test('#timerify()', async t => {
   await t.test('wrapping a function', async t => {
     let timerFn = null
 
@@ -26,9 +23,9 @@ test('#timerify', async t => {
     })
 
     await t.test('with a histogram in milliseconds', async t => {
-      assert.ok(Object.hasOwn(timerFn, 'histogramMs'))
+      assert.ok(Object.hasOwn(timerFn, 'histogram_ms'))
 
-      assert.deepStrictEqual(Object.keys(timerFn.histogramMs), [
+      assert.deepStrictEqual(Object.keys(timerFn.histogram_ms), [
         'count', 'min', 'max', 'mean', 'exceeds', 'stddev', 'percentiles'
       ])
 
@@ -36,18 +33,18 @@ test('#timerify', async t => {
         [
           'count', 'min', 'max', 'mean', 'exceeds', 'stddev'
         ].forEach(key => {
-          assert.ok(!isNaN(timerFn.histogramMs[key]))
+          assert.ok(!isNaN(timerFn.histogram_ms[key]))
         })
 
         await t.test('within range for milliseconds', () => {
-          assert.ok(timerFn.histogramMs.min > 0.1, timerFn.histogramMs.min)
-          assert.ok(timerFn.histogramMs.min < 1000, timerFn.histogramMs.min)
+          assert.ok(timerFn.histogram_ms.min > 0.1, timerFn.histogram_ms.min)
+          assert.ok(timerFn.histogram_ms.min < 1000, timerFn.histogram_ms.min)
 
-          assert.ok(timerFn.histogramMs.max > 0.1, timerFn.histogramMs.mean)
-          assert.ok(timerFn.histogramMs.max < 1000, timerFn.histogramMs.mean)
+          assert.ok(timerFn.histogram_ms.max > 0.1, timerFn.histogram_ms.mean)
+          assert.ok(timerFn.histogram_ms.max < 1000, timerFn.histogram_ms.mean)
 
-          assert.ok(timerFn.histogramMs.max > 0.1, timerFn.histogramMs.max)
-          assert.ok(timerFn.histogramMs.max < 1000, timerFn.histogramMs.max)
+          assert.ok(timerFn.histogram_ms.max > 0.1, timerFn.histogram_ms.max)
+          assert.ok(timerFn.histogram_ms.max < 1000, timerFn.histogram_ms.max)
         })
       })
     })
@@ -55,7 +52,7 @@ test('#timerify', async t => {
     await t.test('with a histogram in nanoseconds', async t => {
       assert.ok(Object.hasOwn(timerFn, 'histogram'))
 
-      assert.deepStrictEqual(Object.keys(timerFn.histogramMs), [
+      assert.deepStrictEqual(Object.keys(timerFn.histogram_ms), [
         'count', 'min', 'max', 'mean', 'exceeds', 'stddev', 'percentiles'
       ])
 
@@ -63,7 +60,7 @@ test('#timerify', async t => {
         [
           'count', 'min', 'max', 'mean', 'exceeds', 'stddev'
         ].forEach(key => {
-          assert.ok(!isNaN(timerFn.histogramMs[key]))
+          assert.ok(!isNaN(timerFn.histogram_ms[key]))
         })
 
         await t.test('within range for nanoseconds', () => {
