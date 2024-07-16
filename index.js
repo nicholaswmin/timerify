@@ -1,36 +1,7 @@
 import { createHistogram } from 'node:perf_hooks'
 import { isFunction, isTimerifiedFunction } from './src/validate.js'
-
-const toDecimal = num => Math.round((num + Number.EPSILON) * 100) / 100
-
-const nanosToMs = nanos => toDecimal(nanos / 1e+6)
-
-const keysToMs = obj =>
-  (acc, key) => ({
-      ...acc,
-      [key]: isNaN(obj[key]) ? 0 : nanosToMs(obj[key])
-    })
-
-const toMsKeys = histogram =>
-  (acc, key) =>
-    ({ ...acc, [key + ' (ms)']: histogram[key] })
-
-const toPrintableRow = () =>
-  (acc, timerified) => ({
-    ... acc,
-    [timerified.name]: ['min', 'mean', 'max', 'stddev']
-        .reduce(toMsKeys(timerified.histogram_ms),
-          { count: timerified.histogram_ms.count }
-        )
-    })
-
-const toRows = timerified => {
-  return Array.isArray(timerified)
-    ? timerified.map(isTimerifiedFunction)
-      .reduce(toPrintableRow(), {})
-    : [isTimerifiedFunction(timerified)]
-      .reduce(toPrintableRow(), {})
-}
+import { nanoKeysToMs, toMsKeys } from './src/numeric.js'
+import { toRow } from './src/to-row.js'
 
 const timerify = (fn, { histogram = createHistogram() } = {}) => {
   isFunction(fn)
@@ -53,9 +24,9 @@ const timerify = (fn, { histogram = createHistogram() } = {}) => {
 
           return {
             ...histogram,
-            ...['min','mean','max','stddev'].reduce(keysToMs(histogram), {
+            ...['min','mean','max','stddev'].reduce(nanoKeysToMs(histogram), {
               percentiles: Object.keys(histogram.percentiles)
-                  .reduce(keysToMs(histogram.percentiles), {})
+                  .reduce(nanoKeysToMs(histogram.percentiles), {})
             })
           }
         }
@@ -63,6 +34,14 @@ const timerify = (fn, { histogram = createHistogram() } = {}) => {
   )
 
   return timerified
+}
+
+const toRows = timerified => {
+  return Array.isArray(timerified)
+    ? timerified.map(isTimerifiedFunction)
+      .reduce(toRow(), {})
+    : [isTimerifiedFunction(timerified)]
+      .reduce(toRow(), {})
 }
 
 export { timerify, toRows }
