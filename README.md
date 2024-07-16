@@ -148,8 +148,8 @@ console.log(timerified.histogram_ms.max)
 
 ### `toRows([fn,fn...])`
 
-returns an object in a format which looks okay-"ish" when pretty-printed with
-[`console.table`][console-table]:
+returns a stats object which can be pretty-printed with
+[`console.table`][console-table].
 
 > example: pretty-print the stats of `foo` and `bar`:
 
