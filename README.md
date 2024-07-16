@@ -162,6 +162,9 @@ npm run test:coverage
 
 [MIT "No Attribution" License][license]
 
+[test-badge]: https://github.com/nicholaswmin/automap/actions/workflows/test:unit.yml/badge.svg
+[test-workflow]: https://github.com/nicholaswmin/automap/actions/workflows/test:unit.yml
+
 [coverage-badge]: https://coveralls.io/repos/github/nicholaswmin/timerify/badge.svg?branch=main
 [coverage-report]: https://coveralls.io/github/nicholaswmin/timerify?branch=main
 
