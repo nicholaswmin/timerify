@@ -9,13 +9,11 @@ function fibonacci(n) {
         : fibonacci(n - 1) + fibonacci(n - 2)
 }
 
-test('perf: #fibonacci()', async t => {
+test('README #fibonacci example:', async t => {
   let fibonacciTimerified = null
 
   t.beforeEach(function() {
     fibonacciTimerified = timerify(fibonacci)
-
-    console.log(fibonacciTimerified.histogramMs)
 
     fibonacciTimerified(30)
   })

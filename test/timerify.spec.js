@@ -40,16 +40,14 @@ test('#timerify', async t => {
         })
 
         await t.test('within range for milliseconds', () => {
-          [ 'min', 'max', 'mean' ].forEach(key => {
-            assert.ok(timerFn.histogramMs.min > 0.1, timerFn.histogramMs.min)
-            assert.ok(timerFn.histogramMs.min < 1000, timerFn.histogramMs.min)
+          assert.ok(timerFn.histogramMs.min > 0.1, timerFn.histogramMs.min)
+          assert.ok(timerFn.histogramMs.min < 1000, timerFn.histogramMs.min)
 
-            assert.ok(timerFn.histogramMs.max > 0.1, timerFn.histogramMs.mean)
-            assert.ok(timerFn.histogramMs.max < 1000, timerFn.histogramMs.mean)
+          assert.ok(timerFn.histogramMs.max > 0.1, timerFn.histogramMs.mean)
+          assert.ok(timerFn.histogramMs.max < 1000, timerFn.histogramMs.mean)
 
-            assert.ok(timerFn.histogramMs.max > 0.1, timerFn.histogramMs.max)
-            assert.ok(timerFn.histogramMs.max < 1000, timerFn.histogramMs.max)
-          })
+          assert.ok(timerFn.histogramMs.max > 0.1, timerFn.histogramMs.max)
+          assert.ok(timerFn.histogramMs.max < 1000, timerFn.histogramMs.max)
         })
       })
     })
