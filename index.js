@@ -36,6 +36,9 @@ const timerify = (fn, { histogram = createHistogram() } = {}) => {
   return timerified
 }
 
+const log = timerified =>
+  console.table(toRows(timerified))
+
 const toRows = timerified => {
   return Array.isArray(timerified)
     ? timerified.map(isTimerifiedFunction)
@@ -44,4 +47,4 @@ const toRows = timerified => {
       .reduce(toRow(), {})
 }
 
-export { timerify, toRows }
+export { timerify, toRows, log }
