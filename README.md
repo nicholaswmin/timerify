@@ -13,6 +13,33 @@ uses the native [Performance Measurement API][perf_hooks]
 standard deviation between these values is below an acceptable
 threshold.
 
+> example: measure the mean call duration of a `fibonacci` function,
+> in milliseconds
+
+```js
+function fibonacci(n) {
+   return n < 1 ? 0
+        : n <= 2 ? 1
+        : fibonacci(n - 1) + fibonacci(n - 2)
+}
+
+const timerified = timerify(fibonacci)
+
+timerified()
+timerified()
+timerified()
+
+console.log(timerified.histogramMs.count)
+// 3 (times called)
+
+console.log(timerified.histogramMs.mean)
+// 2.94 (milliseconds on average)
+```
+
+## Usage with test runners
+
+Just assert the result in *any* test runner.
+
 > example: testing a [`fibonacci`][fib] function using [mocha][mocha]
 
 ```js
@@ -70,8 +97,6 @@ timerified()
 timerified()
 
 console.log(timerified.histogram)
-// Durations in nanoseconds:
-
 //  count: 3,
 //  min: 3971072,
 //  max: 4030463,
@@ -93,8 +118,6 @@ timerified()
 timerified()
 
 console.log(timerified.histogramMs)
-// Durations in milliseconds:
-
 //  count: 3,
 //  min: 3.97,
 //  max: 4.03,
