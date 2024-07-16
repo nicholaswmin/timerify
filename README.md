@@ -1,4 +1,4 @@
-[![test-workflow][test-badge]][test-workflow] [![coverage-workflow][coverage-badge]][coverage-report] [![codeql-workflow][codeql-badge]][codeql-workflow]
+[![test-workflow][test-badge]][test-workflow] [![coverage-workflow][coverage-badge]][coverage-report]
 
 # timerify
 tiny function for quick performance testing
@@ -190,9 +190,6 @@ npm run test:coverage
 
 [coverage-badge]: https://coveralls.io/repos/github/nicholaswmin/timerify/badge.svg?branch=main
 [coverage-report]: https://coveralls.io/github/nicholaswmin/timerify?branch=main
-
-[codeql-badge]: https://github.com/nicholaswmin/timerify/actions/workflows/codeql.yml/badge.svg
-[codeql-workflow]: https://github.com/nicholaswmin/timerify/actions/workflows/codeql.yml
 
 [license]: ./LICENSE
 [mocha]: https://mochajs.org/
