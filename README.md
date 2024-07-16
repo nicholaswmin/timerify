@@ -117,7 +117,7 @@ console.log(timerified.histogram_ms)
 //  percentiles: {  '75': 4.02, '100': 4.03, '87.5': 4.03 }
 ```
 
-> The histograms are instances of [`perf_hooks: Histogram`][node-hgram].
+> the histograms are JSONs of [`perf_hooks: Histogram`][node-hgram].
 
 ### `timerified.reset()`
 
@@ -156,29 +156,32 @@ returns a stats object which can be pretty-printed with
 ```js
 import { timerify, toRows } from '@nicholaswmin/timerify'
 
-const foo = ms => new Promise((resolve => setTimeout(resolve, ms)))
-const bar = ms => new Promise((resolve => setTimeout(resolve, ms)))
+const foo = () => new Promise((resolve => setTimeout(resolve, 5)))
+const bar = () => new Promise((resolve => setTimeout(resolve, 15)))
 
 const fooTimerified = timerify(foo)
 const barTimerified = timerify(bar)
 
-fooTimerified(10)
-barTimerified(20)
-fooTimerified(10)
-barTimerified(30)
-barTimerified(10)
+for (let i = 0; i < 30; i++)
+  await fooTimerified()
 
-console.table(toRows([fooTimerified, barTimerified]))
+for (let i = 0; i < 50; i++)
+  await barTimerified()
+
+console.table(toRows([
+  fooTimerified,
+  barTimerified
+]))
 ```
 
 which logs:
 
 ```console
 ┌────────────────┬───────┬──────────┬───────────┬──────────┬─────────────┐
-│                │ count │ min (ms) │ mean (ms) │ max (ms) │ stddev (ms) │
+│ (index)        │ count │ min (ms) │ mean (ms) │ max (ms) │ stddev (ms) │
 ├────────────────┼───────┼──────────┼───────────┼──────────┼─────────────┤
-│ timerified foo │ 2     │ 11.08    │ 11.29     │ 11.5     │ 0.2         │
-│ timerified bar │ 3     │ 11.49    │ 36.23     │ 61.15    │ 20.26       │
+│ timerified foo │ 30    │ 4.56     │ 5.68      │ 6.25     │ 0.25        │
+│ timerified bar │ 50    │ 15.14    │ 16.04     │ 16.21    │ 0.23        │
 └────────────────┴───────┴──────────┴───────────┴──────────┴─────────────┘
 ```
 
