@@ -20,7 +20,7 @@ test('#reset', async t => {
         timerFn(20)
     })
 
-    await t.test('it logs a max (ms) value', async t => {
+    await t.test('it logs a max (ms) value', () => {
       const max = timerFn.histogramMs.max
 
       assert.ok(max > 0, `max is: ${max} ms`)
@@ -32,13 +32,13 @@ test('#reset', async t => {
       })
 
       await t.test('zeros the captured durations', async t => {
-        await t.test('for nanoseconds', async t => {
+        await t.test('for nanoseconds', () => {
           const max = timerFn.histogram.max
 
           assert.strictEqual(max, 0)
         })
 
-        await t.test('for milliseconds', async t => {
+        await t.test('for milliseconds', () => {
           const max = timerFn.histogramMs.max
 
           assert.strictEqual(max, 0)
@@ -50,7 +50,7 @@ test('#reset', async t => {
               timerFn(20)
           })
 
-          await t.test('it logs a max (ms) value', async t => {
+          await t.test('it logs a max (ms) value', () => {
             const max = timerFn.histogramMs.max
 
             assert.ok(max > 0, `max is: ${max} ms`)

@@ -6,9 +6,19 @@
   "main": "index.js",
   "scripts": {
     "test": "NODE_ENV=test node --test test/index.spec.js",
-    "test:coverage": "NODE_ENV=test node --test --experimental-test-coverage test/index.spec.js",
-    "checks": "npx eslint && npm audit"
+    "test:coverage": "NODE_ENV=test node --test --experimental-test-coverage --test-reporter=lcov --test-reporter-destination=lcov.info test/index.spec.js",
+    "checks": "npx eslint && npm audit && npx size-limit"
   },
+  "engines": {
+    "node": ">=18"
+  },
+  "size-limit": [
+    {
+      "path": "index.js",
+      "limit": "1 kB",
+      "ignore": ["node:perf_hooks"]
+    }
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/nicholaswmin/timerify.git"
@@ -29,6 +39,7 @@
   "homepage": "https://github.com/nicholaswmin/timerify#readme",
   "devDependencies": {
     "@eslint/js": "^9.7.0",
+    "@size-limit/preset-small-lib": "^11.1.4",
     "globals": "^15.8.0"
   }
 }

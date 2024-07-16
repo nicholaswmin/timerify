@@ -1,17 +1,49 @@
-[![test-workflow][test-badge]][test-workflow] [![coverage-workflow][coverage-badge]][coverage-report] [![codeql-workflow][codeql-badge]][codeql-workflow]
+[![test-workflow][test-badge]][test-workflow] [![coverage-workflow][coverage-badge]][coverage-report]
 
 # timerify
-tiny function for quick performance testing
+tiny (< `500` bytes) utility for measuring function performance
 
-uses the native [Performance Measurement API][perf_hooks]
+> uses the native [Performance Measurement API][perf_hooks]
+
+## Install
+
+```bash
+npm i https://github.com/nicholaswmin/timerify
+```
 
 ## Basic Usage
 
 - pass the function under-test to `timerify(func)`
-- call the returned function `x amount of times`
-- assert if the `min`/`mean`/`max` and the
-standard deviation between these values is below an acceptable
-threshold.
+- call the returned function `n` times
+- assert if the `min`/`mean`/`max` and/or standard deviation falls
+  below an acceptable threshold.
+
+> example: measure the mean call duration of a `fibonacci` function,
+> in milliseconds
+
+```js
+function fibonacci(n) {
+   return n < 1 ? 0
+        : n <= 2 ? 1
+        : fibonacci(n - 1) + fibonacci(n - 2)
+}
+
+const timerified = timerify(fibonacci)
+
+timerified()
+timerified()
+timerified()
+
+console.log(timerified.histogramMs.count)
+// 3 (times called)
+
+console.log(timerified.histogramMs.mean)
+// 2.94 (milliseconds on average)
+```
+
+## Usage with test runners
+
+Just assert the result in any test runner.
 
 > example: testing a [`fibonacci`][fib] function using [mocha][mocha]
 
@@ -55,8 +87,8 @@ describe('perf: #fibonacci()', function () {
 
 Timerified functions contain 2 [histograms][node-hgram].
 
-- `timerified.histogram` logs durations in nanoseconds (ns)
-- `timerified.histogramMs` logs durations in milliseconds (ms)
+- `timerified.histogram` logs durations in *nanoseconds* (ns)
+- `timerified.histogramMs` logs durations in *milliseconds* (ms)
 
 ### nanosecond durations
 
@@ -70,7 +102,6 @@ timerified()
 timerified()
 
 console.log(timerified.histogram)
-// Durations in nanoseconds:
 
 //  count: 3,
 //  min: 3971072,
@@ -93,7 +124,6 @@ timerified()
 timerified()
 
 console.log(timerified.histogramMs)
-// Durations in milliseconds:
 
 //  count: 3,
 //  min: 3.97,
@@ -106,7 +136,7 @@ console.log(timerified.histogramMs)
 
 ### `reset`
 
-Calling `timerified.reset()` resets the histogram data:
+`timerified.reset()` resets the histogram data:
 
 > example: run `foo` 2 times, reset and continue running
 
@@ -162,11 +192,11 @@ npm run test:coverage
 
 [MIT "No Attribution" License][license]
 
+[test-badge]: https://github.com/nicholaswmin/automap/actions/workflows/test:unit.yml/badge.svg
+[test-workflow]: https://github.com/nicholaswmin/automap/actions/workflows/test:unit.yml
+
 [coverage-badge]: https://coveralls.io/repos/github/nicholaswmin/timerify/badge.svg?branch=main
 [coverage-report]: https://coveralls.io/github/nicholaswmin/timerify?branch=main
-
-[codeql-badge]: https://github.com/nicholaswmin/timerify/actions/workflows/codeql.yml/badge.svg
-[codeql-workflow]: https://github.com/nicholaswmin/timerify/actions/workflows/codeql.yml
 
 [license]: ./LICENSE
 [mocha]: https://mochajs.org/
