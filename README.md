@@ -1,9 +1,9 @@
 [![test-workflow][test-badge]][test-workflow] [![coverage-workflow][coverage-badge]][coverage-report]
 
 # timerify
-tiny function for quick performance testing
+tiny (< `500` bytes) utility for measuring function performance
 
-uses the native [Performance Measurement API][perf_hooks]
+> uses the native [Performance Measurement API][perf_hooks]
 
 ## Install
 
@@ -102,6 +102,7 @@ timerified()
 timerified()
 
 console.log(timerified.histogram)
+
 //  count: 3,
 //  min: 3971072,
 //  max: 4030463,
@@ -123,6 +124,7 @@ timerified()
 timerified()
 
 console.log(timerified.histogramMs)
+
 //  count: 3,
 //  min: 3.97,
 //  max: 4.03,
@@ -134,7 +136,7 @@ console.log(timerified.histogramMs)
 
 ### `reset`
 
-Calling `timerified.reset()` resets the histogram data:
+`timerified.reset()` resets the histogram data:
 
 > example: run `foo` 2 times, reset and continue running
 
