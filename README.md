@@ -5,13 +5,18 @@ tiny function for quick performance testing
 
 uses the native [Performance Measurement API][perf_hooks]
 
+## Install
+
+```bash
+npm i https://github.com/nicholaswmin/timerify
+```
+
 ## Basic Usage
 
 - pass the function under-test to `timerify(func)`
-- call the returned function `x amount of times`
-- assert if the `min`/`mean`/`max` and the
-standard deviation between these values is below an acceptable
-threshold.
+- call the returned function `n` times
+- assert if the `min`/`mean`/`max` and/or standard deviation falls
+  below an acceptable threshold.
 
 > example: measure the mean call duration of a `fibonacci` function,
 > in milliseconds
