@@ -67,7 +67,7 @@ console.log(timerified.histogram_ms.mean)
 
 ### Histograms
 
-Timerified functions contain 2 [`Histograms`][node-hgram]:
+Timerified functions contain 2 [`Histograms`][hgram]:
 
 `timerified.histogram`
 
@@ -119,7 +119,7 @@ console.log(timerified.histogram_ms)
 
 ### `timerified.reset()`
 
-`timerified.reset()` resets the histogram data.
+`timerified.reset()` resets recorded stats.
 
 > example: run `foo` 2 times, reset and continue running:
 
@@ -143,6 +143,8 @@ timerified()
 console.log(timerified.histogram_ms.max)
 // 1.99
 ```
+
+> The histograms are instances of [`perf_hooks: Histograms`][node-hgram].
 
 ### `toRows([fn,fn...])`
 
@@ -269,6 +271,7 @@ npm run test:coverage
 
 [size-badge]: https://img.shields.io/badge/size-850%20bytes-kb.svg
 
+[hgram]: https://en.wikipedia.org/wiki/Histogram
 [perf_hooks]: https://nodejs.org/api/perf_hooks.html
 [node-hgram]: https://nodejs.org/api/perf_hooks.html#class-histogram
 [perf-timerify]: https://nodejs.org/api/perf_hooks.html#performancetimerifyfn-options
