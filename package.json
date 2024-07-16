@@ -9,6 +9,9 @@
     "test:coverage": "NODE_ENV=test node --test --experimental-test-coverage --test-reporter=lcov --test-reporter-destination=lcov.info test/index.spec.js",
     "checks": "npx eslint && npm audit && npx size-limit"
   },
+  "engines": {
+    "node": ">=18"
+  },
   "size-limit": [
     {
       "path": "index.js",
