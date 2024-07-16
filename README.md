@@ -38,7 +38,7 @@ console.log(timerified.histogramMs.mean)
 
 ## Usage with test runners
 
-Just assert the result in *any* test runner.
+Just assert the result in any test runner.
 
 > example: testing a [`fibonacci`][fib] function using [mocha][mocha]
 
@@ -82,8 +82,8 @@ describe('perf: #fibonacci()', function () {
 
 Timerified functions contain 2 [histograms][node-hgram].
 
-- `timerified.histogram` logs durations in nanoseconds (ns)
-- `timerified.histogramMs` logs durations in milliseconds (ms)
+- `timerified.histogram` logs durations in *nanoseconds* (ns)
+- `timerified.histogramMs` logs durations in *milliseconds* (ms)
 
 ### nanosecond durations
 
