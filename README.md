@@ -1,4 +1,4 @@
-[![test-workflow][test-badge]][test-workflow] [![coverage-workflow][coverage-badge]][coverage-report] [![test-workflow][size-badge]][test-workflow]
+[![test-workflow][test-badge]][test-workflow] [![coverage-workflow][coverage-badge]][coverage-report] [![test-workflow][size-badge]][size-report]
 
 # timerify
 
@@ -20,8 +20,8 @@ Instruments and returns a `function`.
 
 You then use the instrumented function, preferrably `n` times.
 
-> example: log `mean` runtime of a [`fibonacci function`][fib],
-> in *milliseconds*:
+> example: log the `mean` runtime duration from 3 runs of:
+> a [`fibonacci function`][fib] computing he 10th fibonacci
 
 ```js
 import { timerify } from 'timerify'
@@ -29,17 +29,17 @@ import { timerify } from 'timerify'
 const fibonacci = n => n < 1 ? 0 : n <= 2
   ? 1 : fibonacci(n - 1) + fibonacci(n - 2)
 
-const timerified = timerify(fibonacci)
+const timed_fibonacci = timerify(fibonacci)
 
-timerified(10) // compute 10 fibonacci
-timerified(5)  // another 5
-timerified(2)  // another 3
+timed_fibonacci(10)  // recorded
+timed_fibonacci(10)  // recorded
+timed_fibonacci(10)  // recorded
 
-console.log(timerified.histogram_ms.count)
+console.log(timed_fibonacci.histogram_ms.count)
 // 3 (times called)
 
-console.log(timerified.histogram_ms.mean)
-// 2.94 (milliseconds on average)
+console.log(timed_fibonacci.histogram_ms.mean)
+// 2.94 (milliseconds, per run, on average)
 ```
 
 > uses [`performance.timerify`][perf-timerify] so you can also get runtime
@@ -52,11 +52,11 @@ same as above, just `await` the returned function:
 ```js
 const sleep = ms => new Promise((resolve => setTimeout(resolve, ms)))
 
-const timerified = timerify(sleep)
+const timed_sleep = timerify(sleep)
 
-await timerified(100)
-await timerified(100)
-await timerified(100)
+await timed_sleep(100)
+await timed_sleep(100)
+await timed_sleep(100)
 
 console.log(timerified.histogram_ms.count)
 // 3 (times called)
@@ -272,7 +272,8 @@ npm run test:coverage
 [coverage-badge]: https://coveralls.io/repos/github/nicholaswmin/timerify/badge.svg?branch=main
 [coverage-report]: https://coveralls.io/github/nicholaswmin/timerify?branch=main
 
-[size-badge]: https://img.shields.io/badge/size-850%20bytes-kb.svg
+[size-report]: https://bundlephobia.com/package/@nicholaswmin/timerify@0.1.0
+[size-badge]: https://img.shields.io/badge/size-950%20bytes-b.svg
 
 [hgram]: https://en.wikipedia.org/wiki/Histogram
 [perf_hooks]: https://nodejs.org/api/perf_hooks.html
