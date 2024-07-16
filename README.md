@@ -222,7 +222,7 @@ describe('perf: #fibonacci() x 10 times', function () {
 
 ### Caveats
 
-By definition, performance tests are [*non-deterministic*][non-deterministic].
+By definition, performance tests are [*non-deterministic*][indeterminacy].
 Their results are highly-dependent on uncontrollable environmental conditions.
 
 Incorrect usage will lead to [test brittleness][brittle].
@@ -280,7 +280,7 @@ npm run test:coverage
 
 [mocha]: https://mochajs.org/
 [brittle]: https://softwareengineering.stackexchange.com/a/356238/108346
-[non-deterministic]: https://en.wikipedia.org/wiki/Nondeterministic_algorithm
+[indeterminacy]: https://en.wikipedia.org/wiki/Indeterminacy_in_computation
 
 [nicholaswmin]: https://github.com/nicholaswmin
 [license]: ./LICENSE
