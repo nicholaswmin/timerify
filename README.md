@@ -1,4 +1,4 @@
-[![test-workflow][test-badge]][test-workflow] [![test-workflow][size-badge]][test-workflow]
+[![test-workflow][test-badge]][test-workflow] [![coverage-workflow][coverage-badge]][coverage-report] [![test-workflow][size-badge]][test-workflow]
 
 # timerify
 
@@ -14,7 +14,7 @@ tiny performance testing utility
 npm i @nicholaswmin/timerify
 ```
 
-### `timerify()`
+### `timerify(fn)`
 
 Instruments and returns a `function`.
 
@@ -67,7 +67,7 @@ console.log(timerified.histogram_ms.mean)
 
 ### Histograms
 
-Timerified functions contain 2 [`Histograms`][node-hgram]:
+Timerified functions contain 2 [`Histograms`][hgram]:
 
 `timerified.histogram`
 
@@ -117,9 +117,11 @@ console.log(timerified.histogram_ms)
 //  percentiles: {  '75': 4.02, '100': 4.03, '87.5': 4.03 }
 ```
 
+> The histograms are instances of [`perf_hooks: Histogram`][node-hgram].
+
 ### `timerified.reset()`
 
-`timerified.reset()` resets the histogram data.
+`timerified.reset()` resets recorded stats.
 
 > example: run `foo` 2 times, reset and continue running:
 
@@ -144,9 +146,9 @@ console.log(timerified.histogram_ms.max)
 // 1.99
 ```
 
-### `toRows()`
+### `toRows([fn,fn...])`
 
-returns rows from timerified function which can be pretty-printed with
+returns an object in a format which looks okay-"ish" when pretty-printed with
 [`console.table`][console-table]:
 
 > example: pretty-print the stats of `foo` and `bar`:
@@ -192,12 +194,12 @@ import assert from 'node:assert'
 const fibonacci = n => n < 1 ? 0 : n <= 2
   ? 1 : fibonacci(n - 1) + fibonacci(n - 2)
 
-describe('perf: #fibonacci() x 10 times', function () {
+describe('perf: #fibonacci(20) x 10 times', function () {
   beforeEach(function() {
     this.fibonacci = timerify(fibonacci)
 
     for (let i = 0; i < 10; i++)
-      this.fibonacci(10)
+      this.fibonacci(20)
   })
 
   it('completes each cycle quickly', function () {
@@ -212,7 +214,7 @@ describe('perf: #fibonacci() x 10 times', function () {
     assert.ok(max < 100, 'max exceeded 100ms threshold')
   })
 
-  it('exhibits consistent running times', function () {
+  it('has consistent running times', function () {
     const deviation = this.fibonacci.histogram_ms.stddev
 
     assert.ok(deviation < 2, 'deviation exceeded 2ms threshold')
@@ -264,8 +266,12 @@ npm run test:coverage
 [test-badge]: https://github.com/nicholaswmin/automap/actions/workflows/test:unit.yml/badge.svg
 [test-workflow]: https://github.com/nicholaswmin/automap/actions/workflows/test:unit.yml
 
-[size-badge]: https://img.shields.io/badge/size-650%20bytes-kb.svg
+[coverage-badge]: https://coveralls.io/repos/github/nicholaswmin/timerify/badge.svg?branch=main
+[coverage-report]: https://coveralls.io/github/nicholaswmin/timerify?branch=main
 
+[size-badge]: https://img.shields.io/badge/size-850%20bytes-kb.svg
+
+[hgram]: https://en.wikipedia.org/wiki/Histogram
 [perf_hooks]: https://nodejs.org/api/perf_hooks.html
 [node-hgram]: https://nodejs.org/api/perf_hooks.html#class-histogram
 [perf-timerify]: https://nodejs.org/api/perf_hooks.html#performancetimerifyfn-options
