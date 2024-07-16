@@ -1,6 +1,6 @@
 import { createHistogram } from 'node:perf_hooks'
 import { isFunction, isTimerifiedFunction } from './src/validate.js'
-import { nanoKeysToMs, toMsKeys } from './src/numeric.js'
+import { nanoKeysToMs } from './src/numeric.js'
 import { toRow } from './src/to-row.js'
 
 const timerify = (fn, { histogram = createHistogram() } = {}) => {

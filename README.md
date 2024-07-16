@@ -14,7 +14,7 @@ tiny performance testing utility
 npm i @nicholaswmin/timerify
 ```
 
-### `timerify()`
+### `timerify(fn)`
 
 Instruments and returns a `function`.
 
@@ -144,9 +144,9 @@ console.log(timerified.histogram_ms.max)
 // 1.99
 ```
 
-### `toRows()`
+### `toRows([fn,fn...])`
 
-returns rows from timerified function which can be pretty-printed with
+returns an object in a format which looks okay-"ish" when pretty-printed with
 [`console.table`][console-table]:
 
 > example: pretty-print the stats of `foo` and `bar`:
@@ -192,12 +192,12 @@ import assert from 'node:assert'
 const fibonacci = n => n < 1 ? 0 : n <= 2
   ? 1 : fibonacci(n - 1) + fibonacci(n - 2)
 
-describe('perf: #fibonacci() x 10 times', function () {
+describe('perf: #fibonacci(20) x 10 times', function () {
   beforeEach(function() {
     this.fibonacci = timerify(fibonacci)
 
     for (let i = 0; i < 10; i++)
-      this.fibonacci(10)
+      this.fibonacci(20)
   })
 
   it('completes each cycle quickly', function () {
@@ -212,7 +212,7 @@ describe('perf: #fibonacci() x 10 times', function () {
     assert.ok(max < 100, 'max exceeded 100ms threshold')
   })
 
-  it('exhibits consistent running times', function () {
+  it('has consistent running times', function () {
     const deviation = this.fibonacci.histogram_ms.stddev
 
     assert.ok(deviation < 2, 'deviation exceeded 2ms threshold')
