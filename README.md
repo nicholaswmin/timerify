@@ -267,7 +267,7 @@ npm run test:coverage
 [coverage-badge]: https://coveralls.io/repos/github/nicholaswmin/timerify/badge.svg?branch=main
 [coverage-report]: https://coveralls.io/github/nicholaswmin/timerify?branch=main
 
-[size-badge]: https://img.shields.io/badge/size-650%20bytes-kb.svg
+[size-badge]: https://img.shields.io/badge/size-850%20bytes-kb.svg
 
 [perf_hooks]: https://nodejs.org/api/perf_hooks.html
 [node-hgram]: https://nodejs.org/api/perf_hooks.html#class-histogram
