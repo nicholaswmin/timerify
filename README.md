@@ -2,9 +2,8 @@
 
 # timerify
 
-tiny performance testing utility
-
-> uses native [`PerformanceMeasurement APIs`][perf_hooks][^1]
+a tiny performance testing utility, built on top of
+native [`PerformanceMeasurement APIs`][perf_hooks][^1]
 
 ## Usage
 
@@ -136,7 +135,7 @@ console.log(timed_foo.stats_ms)
 
 ### `timerified.reset()`
 
-`timerified.reset()` resets recorded stats.
+resets recorded stats to zero.
 
 > example: run `foo` 2 times, reset recorded stats to `0` & continue recording:
 
