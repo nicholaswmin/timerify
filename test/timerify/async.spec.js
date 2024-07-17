@@ -19,13 +19,13 @@ test('#timerify() - async', async t => {
     })
 
     await t.test('it logs a count', () => {
-      const count = timerFn.histogram_ms.count
+      const count = timerFn.stats_ms.count
 
       assert.strictEqual(count, 2)
     })
 
     await t.test('it logs a reasonable mean duration', () => {
-      const mean = timerFn.histogram_ms.mean
+      const mean = timerFn.stats_ms.mean
 
       assert.ok(mean > 45, `mean is: ${mean} ms`)
       assert.ok(mean < 200, `mean is: ${mean} ms`)

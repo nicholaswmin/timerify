@@ -16,22 +16,24 @@ const timerify = (fn, { histogram = createHistogram() } = {}) => {
     return timerified
   }
 
-  Object.defineProperty(
-      timerified,
-      'histogram_ms', {
-        get: function() {
-          const histogram = timerified.histogram.toJSON()
+  Object.defineProperty(timerified, 'stats_ns', {
+    get: function() {
+      return timerified.histogram.toJSON()
+    }
+  })
 
-          return {
-            ...histogram,
-            ...['min','mean','max','stddev'].reduce(nanoKeysToMs(histogram), {
-              percentiles: Object.keys(histogram.percentiles)
-                  .reduce(nanoKeysToMs(histogram.percentiles), {})
-            })
-          }
-        }
+  Object.defineProperty(timerified, 'stats_ms', {
+    get: function() {
+      return {
+        ...timerified.stats_ns,
+        ...['min','mean','max','stddev']
+              .reduce(nanoKeysToMs(timerified.stats_ns), {
+          percentiles: Object.keys(timerified.stats_ns.percentiles)
+              .reduce(nanoKeysToMs(timerified.stats_ns.percentiles), {})
+        })
       }
-  )
+    }
+  })
 
   return timerified
 }

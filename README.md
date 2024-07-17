@@ -36,10 +36,10 @@ timed_fibonacci(10)  // recorded
 timed_fibonacci(10)  // recorded
 timed_fibonacci(10)  // recorded
 
-console.log(timed_fibonacci.histogram_ms.count)
+console.log(timed_fibonacci.stats_ms.count)
 // 3 (times called)
 
-console.log(timed_fibonacci.histogram_ms.mean)
+console.log(timed_fibonacci.stats_ms.mean)
 // 2.94 (milliseconds, per run, on average)
 ```
 
@@ -56,29 +56,24 @@ await timed_sleep(100)
 await timed_sleep(100)
 await timed_sleep(100)
 
-console.log(timed_sleep.histogram_ms.count)
+console.log(timed_sleep.stats_ms.count)
 // 3 (times called)
 
-console.log(timed_sleep.histogram_ms.mean)
+console.log(timed_sleep.stats_ms.mean)
 // 100 (milliseconds)
 ```
 
 ### Recorded data
 
-Timerified functions contain 2 [`Histograms`][hgram]:
+Timerified functions contain recorded statistics in:
 
-`timerified.histogram`
+- `timerified.stats_ns`, expresses durations in [*nanoseconds (ns)*][ns]
+- `timerified.stats_ms`, expresses durations in [*milliseconds (ms)*][ms]
 
-records durations in [*nanoseconds*][ns] (ns)
+Both contain the following:
 
-`timerified.histogram_ms`
-
-records durations in [*milliseconds*][ms] (ms)
-
-Each Histogram contains the following properties:
-
-| property    	| description                                        	  |
-|-------------	|-----------------------------------------------------	|
+| property      	| description                                      	  |
+|---------------	|----------------------------------------------------	|
 | `count`       	| count of function invocations                      	|
 | `min`         	| fastest recorded duration                          	|
 | `mean`        	| statistical [mean][mean] of all durations          	|
@@ -86,7 +81,7 @@ Each Histogram contains the following properties:
 | `stddev`      	| [standard deviation][stddev] of all durations      	|
 | `percentiles` 	| [k-th percentiles][percentiles] of all durations   	|
 
-> example: run function `foo` 3 times, log `nanoseconds`:
+> example: log running time of `foo`, in `nanoseconds`:
 
 ```js
 const timed_foo = timerify(foo)
@@ -95,7 +90,7 @@ timed_foo()
 timed_foo()
 timed_foo()
 
-console.log(timed_foo.histogram)
+console.log(timed_foo.stats_ns)
 
 //  count: 3,
 //  min: 3971072,
@@ -115,7 +110,7 @@ timed_foo()
 timed_foo()
 timed_foo()
 
-console.log(timed_foo.histogram_ms)
+console.log(timed_foo.stats_ms)
 
 //  count: 3,
 //  min: 3.97,
@@ -126,7 +121,7 @@ console.log(timed_foo.histogram_ms)
 //  percentiles: {  '75': 4.02, '100': 4.03, '87.5': 4.03 }
 ```
 
-> the histograms are JSONs of [`perf_hooks: Histogram`][node-hgram].
+> both objects are variants of [`perf_hooks: Histogram`][node-hgram].
 
 ### `timerified.reset()`
 
@@ -140,18 +135,18 @@ const timed_foo = timerify(foo)
 timed_foo()
 timed_foo()
 
-console.log(timed_foo.histogram_ms.max)
+console.log(timed_foo.stats_ms.max)
 // 2.01
 
 timed_foo.reset()
 
-console.log(timed_foo.histogram_ms.max)
+console.log(timed_foo.stats_ms.max)
 // 0
 
 timed_foo()
 timed_foo()
 
-console.log(timed_foo.histogram_ms.max)
+console.log(timed_foo.stats_ms.max)
 // 1.99
 ```
 
@@ -214,19 +209,19 @@ test('perf: #fibonacci(20) x 10 times', async t => {
   })
 
   await t.test('called 10 times', () => {
-    const callCount = timed_fibonacci.histogram_ms.count
+    const callCount = timed_fibonacci.stats_ms.count
 
     assert.strictEqual(callCount, 10)
   })
 
   await t.test('runs quickly, on average', () => {
-    const mean = timed_fibonacci.histogram_ms.mean
+    const mean = timed_fibonacci.stats_ms.mean
 
     assert.ok(mean < 30, `mean: ${mean} ms exceeded 30ms threshold`)
   })
 
   await t.test('has consistent running times', () => {
-    const dev = timed_fibonacci.histogram_ms.stddev
+    const dev = timed_fibonacci.stats_ms.stddev
 
     assert.ok(dev < 2, `deviation: ${dev} ms exceeded 30ms threshold`)
   })

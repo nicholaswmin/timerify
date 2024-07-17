@@ -8,8 +8,8 @@ const nanoKeysToMs = obj =>
       [key]: isNaN(obj[key]) ? 0 : nanosToMs(obj[key])
     })
 
-const toMsKeys = histogram =>
+const toMsKeys = nsKeys =>
   (acc, key) =>
-    ({ ...acc, [key + ' (ms)']: histogram[key] })
+    ({ ...acc, [key + ' (ms)']: nsKeys[key] })
 
 export { nanoKeysToMs, toMsKeys }

@@ -16,19 +16,19 @@ test('example: #fibonacci()', async t => {
   })
 
   await t.test('completes each cycle quickly', () => {
-    const mean = fibonacciTimerified.histogram_ms.mean
+    const mean = fibonacciTimerified.stats_ms.mean
 
     assert.ok(mean < 100, `mean: ${mean} exceeds 100ms threshold`)
   })
 
   await t.test('never exceeds 100ms per cycle', () => {
-    const max = fibonacciTimerified.histogram_ms.max
+    const max = fibonacciTimerified.stats_ms.max
 
     assert.ok(max < 200, `max: ${max} exceeds 200ms threshold`)
   })
 
   await t.test('has consistent running times', () => {
-    const deviation = fibonacciTimerified.histogram_ms.stddev
+    const deviation = fibonacciTimerified.stats_ms.stddev
 
     assert.ok(deviation < 20, `deviation: ${deviation} exceeds 20ms threshold`)
   })

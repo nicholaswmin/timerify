@@ -15,19 +15,19 @@ test('perf: #fibonacci(20) x 10 times', async t => {
   })
 
   await t.test('called 10 times', () => {
-    const callCount = timed_fibonacci.histogram_ms.count
+    const callCount = timed_fibonacci.stats_ms.count
 
     assert.strictEqual(callCount, 10)
   })
 
   await t.test('runs quickly, on average', () => {
-    const mean = timed_fibonacci.histogram_ms.mean
+    const mean = timed_fibonacci.stats_ms.mean
 
     assert.ok(mean < 30, `mean: ${mean} ms exceeded 30ms threshold`)
   })
 
   await t.test('has consistent running times', () => {
-    const dev = timed_fibonacci.histogram_ms.stddev
+    const dev = timed_fibonacci.stats_ms.stddev
 
     assert.ok(dev < 2, `deviation: ${dev} ms exceeded 30ms threshold`)
   })
