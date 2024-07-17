@@ -199,7 +199,7 @@ Just assert the result in any test runner using any assertion library
 > requires Node.js v20+
 
 ```js
-import { test } from 'node:test'
+import test from 'node:test'
 import assert from 'node:assert'
 
 import { timerify } from '@nicholaswmin/timerify'
