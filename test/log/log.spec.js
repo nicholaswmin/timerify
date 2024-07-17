@@ -31,7 +31,7 @@ test('#log', async t => {
         assert.strictEqual(Object.keys(result).length, 1)
 
         await t.test('set to the function name', () => {
-          assert.strictEqual(Object.keys(result).pop(), 'timerified fibonacci')
+          assert.strictEqual(Object.keys(result).pop(), 'fibonacci')
         })
       })
 
@@ -73,8 +73,8 @@ test('#log', async t => {
         assert.strictEqual(keys.length, 2)
 
         await t.test('set to the function names', () => {
-          assert.ok(keys.includes('timerified fibonacci'))
-          assert.ok(keys.includes('timerified sleep'))
+          assert.ok(keys.includes('fibonacci'))
+          assert.ok(keys.includes('sleep'))
         })
       })
 
