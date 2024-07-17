@@ -186,38 +186,40 @@ logs:
 
 Just assert the result in any test runner using any assertion library
 
-> example: testing a `fibonacci` function using [mocha][mocha]:
+> example: using [node test-runner][node-test]:
+> requires Node.js v22+
 
 ```js
-import assert from 'node:assert'
+import test from 'node:test'
+import { timerify } from '@nicholaswmin/timerify'
 
 const fibonacci = n => n < 1 ? 0 : n <= 2
   ? 1 : fibonacci(n - 1) + fibonacci(n - 2)
 
-describe('perf: #fibonacci(20) x 10 times', function () {
-  beforeEach(function() {
-    this.fibonacci = timerify(fibonacci)
+await test('perf: #fibonacci(20) x 10 times', async t => {
+  const timed_fibonacci = timerify(fibonacci)
 
+  t.beforeEach(() => {
     for (let i = 0; i < 10; i++)
-      this.fibonacci(20)
+      timed_fibonacci(20)
   })
 
-  it('completes each cycle quickly', function () {
-    const mean = this.fibonacci.histogram_ms.mean
+  await t.test('completes each cycle quickly', t => {
+    const mean = timed_fibonacci.histogram_ms.mean
 
-    assert.ok(mean < 30, 'mean exceeded 30ms threshold')
+    t.assert.ok(mean < 30, `mean: ${mean} ms exceeded 30ms threshold`)
   })
 
-  it('never exceeds 100ms', function () {
-    const max = this.fibonacci.histogram_ms.max
+  await t.test('never exceeds 100ms', t => {
+    const max = timed_fibonacci.histogram_ms.max
 
-    assert.ok(max < 100, 'max exceeded 100ms threshold')
+    t.assert.ok(max < 100, `max: ${max} ms exceeded 100ms threshold`)
   })
 
-  it('has consistent running times', function () {
-    const deviation = this.fibonacci.histogram_ms.stddev
+  await t.test('has consistent running times', t => {
+    const dev = timed_fibonacci.histogram_ms.stddev
 
-    assert.ok(deviation < 2, 'deviation exceeded 2ms threshold')
+    t.assert.ok(dev < 2, `deviation: ${dev} ms exceeded 30ms threshold`)
   })
 })
 ```
@@ -289,7 +291,7 @@ npm run test:coverage
 [ns]: https://en.wikipedia.org/wiki/Nanosecond
 [ms]: https://en.wikipedia.org/wiki/Millisecond
 
-[mocha]: https://mochajs.org/
+[node-test]: https://nodejs.org/api/test.html#test-runner
 [brittle]: https://softwareengineering.stackexchange.com/a/356238/108346
 [indeterminacy]: https://en.wikipedia.org/wiki/Indeterminacy_in_computation
 
