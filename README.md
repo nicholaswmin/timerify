@@ -59,10 +59,10 @@ await timed_sleep(100)
 await timed_sleep(100)
 await timed_sleep(100)
 
-console.log(timerified.histogram_ms.count)
+console.log(timed_sleep.histogram_ms.count)
 // 3 (times called)
 
-console.log(timerified.histogram_ms.mean)
+console.log(timed_sleep.histogram_ms.mean)
 // 100 (milliseconds)
 ```
 
@@ -81,13 +81,13 @@ records durations in [*milliseconds*][ms] (ms)
 > example: run function `foo` 3 times, log `nanoseconds`:
 
 ```js
-const timerified = timerify(foo)
+const timed_foo = timerify(foo)
 
-timerified()
-timerified()
-timerified()
+timed_foo()
+timed_foo()
+timed_foo()
 
-console.log(timerified.histogram)
+console.log(timed_foo.histogram)
 
 //  count: 3,
 //  min: 3971072,
@@ -101,13 +101,13 @@ console.log(timerified.histogram)
 > example: same as above, this time in `milliseconds`:
 
 ```js
-const timerified = timerify(foo)
+const timed_foo = timerify(foo)
 
-timerified()
-timerified()
-timerified()
+timed_foo()
+timed_foo()
+timed_foo()
 
-console.log(timerified.histogram_ms)
+console.log(timed_foo.histogram_ms)
 
 //  count: 3,
 //  min: 3.97,
@@ -127,23 +127,23 @@ console.log(timerified.histogram_ms)
 > example: run `foo` 2 times, reset and continue running:
 
 ```js
-const timerified = timerify(foo)
+const timed_foo = timerify(foo)
 
-timerified()
-timerified()
+timed_foo()
+timed_foo()
 
-console.log(timerified.histogram_ms.max)
+console.log(timed_foo.histogram_ms.max)
 // 2.01
 
-timerified.reset()
+timed_foo.reset()
 
-console.log(timerified.histogram_ms.max)
+console.log(timed_foo.histogram_ms.max)
 // 0
 
-timerified()
-timerified()
+timed_foo()
+timed_foo()
 
-console.log(timerified.histogram_ms.max)
+console.log(timed_foo.histogram_ms.max)
 // 1.99
 ```
 
@@ -159,16 +159,16 @@ import { timerify, log } from '@nicholaswmin/timerify'
 const foo = () => new Promise((resolve => setTimeout(resolve, 5)))
 const bar = () => new Promise((resolve => setTimeout(resolve, 15)))
 
-const fooTimerified = timerify(foo)
-const barTimerified = timerify(bar)
+const timed_foo = timerify(foo)
+const timed_bar = timerify(bar)
 
 for (let i = 0; i < 30; i++)
-  await fooTimerified()
+  await timed_foo()
 
 for (let i = 0; i < 50; i++)
-  await barTimerified()
+  await timed_bar()
 
-log([ fooTimerified, barTimerified ])
+log([ timed_foo, timed_bar ])
 ```
 
 logs:
