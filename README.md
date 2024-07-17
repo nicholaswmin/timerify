@@ -4,7 +4,7 @@
 
 tiny performance testing utility
 
-> uses native [Performance Measurement APIs][perf_hooks][^1]
+> uses native [Web Performance Timing APIs][web_perf_api][^1]
 
 ## Usage
 
@@ -280,6 +280,7 @@ npm run test:coverage
 [stddev]: https://en.wikipedia.org/wiki/Standard_deviation
 [percentiles]: https://en.wikipedia.org/wiki/Percentile
 
+[web_perf_api]: https://w3c.github.io/perf-timing-primer/
 [perf_hooks]: https://nodejs.org/api/perf_hooks.html
 [node-hgram]: https://nodejs.org/api/perf_hooks.html#class-histogram
 [perf-timerify]: https://nodejs.org/api/perf_hooks.html#performancetimerifyfn-options
