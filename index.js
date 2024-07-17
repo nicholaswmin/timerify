@@ -47,7 +47,6 @@ const log = (timerified, { title = null } = {}) => {
 
   console.table(rows)
 
-
   return rows
 }
 

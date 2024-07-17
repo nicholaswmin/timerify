@@ -4,7 +4,7 @@
 
 tiny performance testing utility
 
-> uses native [Performance Measurement APIs][perf_hooks]
+> uses native [Performance Measurement APIs][perf_hooks][^1]
 
 ## Usage
 
@@ -43,9 +43,6 @@ console.log(timed_fibonacci.histogram_ms.mean)
 // 2.94 (milliseconds, per run, on average)
 ```
 
-> uses [`performance.timerify`][perf-timerify] so you can also get runtime
-> stats by setting up a [`PerformanceObserver`][perf-observer].
-
 #### [`Promise`][promise]/[`async`][async] functions
 
 same as above, just `await` the returned function:
@@ -66,7 +63,7 @@ console.log(timed_sleep.histogram_ms.mean)
 // 100 (milliseconds)
 ```
 
-### Histograms
+### Recorded data
 
 Timerified functions contain 2 [`Histograms`][hgram]:
 
@@ -77,6 +74,17 @@ records durations in [*nanoseconds*][ns] (ns)
 `timerified.histogram_ms`
 
 records durations in [*milliseconds*][ms] (ms)
+
+Each Histogram contains the following properties:
+
+| property    	| description                                        	  |
+|-------------	|-----------------------------------------------------	|
+| `count`       	| count of function invocations                      	|
+| `min`         	| fastest recorded duration                          	|
+| `mean`        	| statistical [mean][mean] of all durations          	|
+| `max`         	| slowest recorded duration                          	|
+| `stddev`      	| [standard deviation][stddev] of all durations      	|
+| `percentiles` 	| [k-th percentiles][percentiles] of all durations   	|
 
 > example: run function `foo` 3 times, log `nanoseconds`:
 
@@ -236,7 +244,7 @@ While more predictable, they are still environmentally-dependent variables.
 
 Because of these factors, it's only advisable to include them if
 circumstances or requirements *specifically* call for them and even then they
-should only be a part of integration-testing and above;
+should only be a part of integration-testing[^2] and above;
 *never* as a part of unit-testing.
 
 ## Tests
@@ -278,6 +286,10 @@ npm run test:coverage
 [size-badge]: https://img.shields.io/badge/size-950%20bytes-b.svg
 
 [hgram]: https://en.wikipedia.org/wiki/Histogram
+[mean]: https://en.wikipedia.org/wiki/Mean
+[stddev]: https://en.wikipedia.org/wiki/Standard_deviation
+[percentiles]: https://en.wikipedia.org/wiki/Percentile
+
 [perf_hooks]: https://nodejs.org/api/perf_hooks.html
 [node-hgram]: https://nodejs.org/api/perf_hooks.html#class-histogram
 [perf-timerify]: https://nodejs.org/api/perf_hooks.html#performancetimerifyfn-options
@@ -296,3 +308,16 @@ npm run test:coverage
 
 [nicholaswmin]: https://github.com/nicholaswmin
 [license]: ./LICENSE
+
+## Footnotes
+
+[^1]: This module assembles 2 native `PerformanceMeasurement` utilities
+      (`performance.timerify`, `Histogram`) into an easier-to-use unit to
+      avoid repeated & elaborate test setups.
+      You can skip this module entirely and just use the native functions.
+[^2]: This is not entirely true.
+      Integration-testing verifies functional requirements and performance
+      is a non-functional requirement.
+      However, it is still preferable to do performance-testing at this level
+      rather than the unit-test level where it is entirely and undebatably
+      contra-indicated.
