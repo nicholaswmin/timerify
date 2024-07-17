@@ -19,21 +19,22 @@ Instruments and returns a `function`.
 
 You then use the instrumented function, preferrably `n` times.
 
-> example: log the `mean` runtime duration from 3 runs of:
-
-> a [`fibonacci function`][fib] computing the 10th fibonacci number
+> example: log the `mean` runtime duration from 3 runs of a
+[`fibonacci function`][fib] computing the 10th fibonacci number
 
 ```js
 import { timerify } from 'timerify'
 
+// function
 const fibonacci = n => n < 1 ? 0 : n <= 2
   ? 1 : fibonacci(n - 1) + fibonacci(n - 2)
 
+// same function but instrumented
 const timed_fibonacci = timerify(fibonacci)
 
-timed_fibonacci(10)  // recorded
-timed_fibonacci(10)  // recorded
-timed_fibonacci(10)  // recorded
+timed_fibonacci(10)  // recorded a run
+timed_fibonacci(10)  // recorded another
+timed_fibonacci(10)  // recorded another
 
 console.log(timed_fibonacci.stats_ms.count)
 // 3 (times called)
