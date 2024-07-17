@@ -1,4 +1,6 @@
 import { test } from 'node:test'
+import assert from 'node:assert'
+
 import { timerify } from '../../index.js'
 
 const fibonacci = n => n < 1 ? 0 : n <= 2
@@ -6,31 +8,27 @@ const fibonacci = n => n < 1 ? 0 : n <= 2
 
 const timed_fibonacci = timerify(fibonacci)
 
-test('perf: #fibonacci(20) x 10 times', {
-  skip: process.version.split('.')[0]?.replace('v', '') < 22 ?
-    't.assert only available on node v22+' : false
-}, async t => {
+test('perf: #fibonacci(20) x 10 times', async t => {
   t.beforeEach(() => {
-    console.log('called')
     for (let i = 0; i < 10; i++)
       timed_fibonacci(20)
   })
 
-  await t.test('called 10 times', t => {
+  await t.test('called 10 times', () => {
     const callCount = timed_fibonacci.histogram_ms.count
 
-    t.assert.strictEqual(callCount, 10)
+    assert.strictEqual(callCount, 10)
   })
 
-  await t.test('runs quickly, on average', t => {
+  await t.test('runs quickly, on average', () => {
     const mean = timed_fibonacci.histogram_ms.mean
 
-    t.assert.ok(mean < 30, `mean: ${mean} ms exceeded 30ms threshold`)
+    assert.ok(mean < 30, `mean: ${mean} ms exceeded 30ms threshold`)
   })
 
-  await t.test('has consistent running times', t => {
+  await t.test('has consistent running times', () => {
     const dev = timed_fibonacci.histogram_ms.stddev
 
-    t.assert.ok(dev < 2, `deviation: ${dev} ms exceeded 30ms threshold`)
+    assert.ok(dev < 2, `deviation: ${dev} ms exceeded 30ms threshold`)
   })
 })

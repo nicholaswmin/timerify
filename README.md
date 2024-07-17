@@ -196,10 +196,12 @@ Just assert the result in any test runner using any assertion library
 
 > example: using [node test-runner][node-test]:
 
-> requires Node.js v22+
+> requires Node.js v20+
 
 ```js
 import { test } from 'node:test'
+import assert from 'node:assert'
+
 import { timerify } from '@nicholaswmin/timerify'
 
 const fibonacci = n => n < 1 ? 0 : n <= 2
@@ -211,22 +213,22 @@ test('perf: #fibonacci(20) x 10 times', async t => {
       timed_fibonacci(20)
   })
 
-  await t.test('called 10 times', t => {
+  await t.test('called 10 times', () => {
     const callCount = timed_fibonacci.histogram_ms.count
 
-    t.assert.strictEqual(callCount, 10)
+    assert.strictEqual(callCount, 10)
   })
 
-  await t.test('runs quickly, on average', t => {
+  await t.test('runs quickly, on average', () => {
     const mean = timed_fibonacci.histogram_ms.mean
 
-    t.assert.ok(mean < 30, `mean: ${mean} ms exceeded 30ms threshold`)
+    assert.ok(mean < 30, `mean: ${mean} ms exceeded 30ms threshold`)
   })
 
-  await t.test('has consistent running times', t => {
+  await t.test('has consistent running times', () => {
     const dev = timed_fibonacci.histogram_ms.stddev
 
-    t.assert.ok(dev < 2, `deviation: ${dev} ms exceeded 30ms threshold`)
+    assert.ok(dev < 2, `deviation: ${dev} ms exceeded 30ms threshold`)
   })
 })
 ```
