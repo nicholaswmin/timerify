@@ -138,7 +138,7 @@ console.log(timed_foo.stats_ms)
 
 `timerified.reset()` resets recorded stats.
 
-> example: run `foo` 2 times, reset and continue running:
+> example: run `foo` 2 times, reset recorded stats to `0` & continue recording:
 
 ```js
 const timed_foo = timerify(foo)
