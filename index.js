@@ -1,7 +1,7 @@
 import { createHistogram } from 'node:perf_hooks'
-import { isFunction } from './src/validate.js'
-import { nanoKeysToMs } from './src/numeric.js'
-import { toRows } from './src/to-row.js'
+import { HistogramMs } from './src/histogram-ms.js'
+import { isFunction } from './src/errors.js'
+import { log } from './src/log.js'
 
 const timerify = (fn, { histogram = createHistogram() } = {}) => {
   isFunction(fn)
@@ -24,32 +24,11 @@ const timerify = (fn, { histogram = createHistogram() } = {}) => {
 
   Object.defineProperty(timerified, 'stats_ms', {
     get: function() {
-      return {
-        ...timerified.stats_ns,
-        ...['min','mean','max','stddev']
-              .reduce(nanoKeysToMs(timerified.stats_ns), {
-          percentiles: Object.keys(timerified.stats_ns.percentiles)
-              .reduce(nanoKeysToMs(timerified.stats_ns.percentiles), {})
-        })
-      }
+      return new HistogramMs(this.stats_ns)
     }
   })
 
   return timerified
-}
-
-const log = (timerified, { title = null } = {}) => {
-  const rows = toRows(timerified)
-
-  if (['test'].includes(process.env.NODE_ENV))
-    return rows
-
-  if (title)
-    console.log('\n','\n', title, '\n', '-'.repeat(title.length))
-
-  console.table(rows)
-
-  return rows
 }
 
 export { timerify, log }
