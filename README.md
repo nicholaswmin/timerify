@@ -167,7 +167,7 @@ for (let i = 0; i < 30; i++)
 for (let i = 0; i < 50; i++)
   await barTimerified()
 
-await log([ fooTimerified, barTimerified ])
+log([ fooTimerified, barTimerified ])
 ```
 
 logs:

@@ -36,12 +36,19 @@ const timerify = (fn, { histogram = createHistogram() } = {}) => {
   return timerified
 }
 
-const log = async timerified => {
-  const rows = await toRows(timerified)
+const log = (timerified, { title = null }) => {
+  const rows = toRows(timerified)
 
-  return ['test'].includes(process.env.NODE_ENV)
-    ? rows
-    : console.table(rows)
+  if (['test'].includes(process.env.NODE_ENV))
+    return rows
+
+  if (title)
+    console.log('\n','\n', title, '\n', '-'.repeat(title.length))
+
+  console.table(rows)
+
+
+  return rows
 }
 
 export { timerify, log }
