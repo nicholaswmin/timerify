@@ -238,16 +238,9 @@ test('perf: #fibonacci(20) x 10 times', async t => {
 By definition, performance tests are [*non-deterministic*][indeterminacy].
 Their results are highly-dependent on uncontrollable environmental conditions.
 
-Incorrect usage will lead to [test brittleness][brittle].
-
 In the examples above, I specifically omit testing for the statistical
 `min`/`max`, opting instead for statistical `mean` and `deviation`.
 While more predictable, they are still environmentally-dependent variables.
-
-Because of these factors, it's only advisable to include them if
-circumstances or requirements *specifically* call for them and even then they
-should only be a part of integration-testing[^2] and above;
-*never* as a part of unit-testing.
 
 ## Tests
 
@@ -317,9 +310,3 @@ npm run test:coverage
       (`performance.timerify`, `Histogram`) into an easier-to-use unit to
       avoid repeated & elaborate test setups.
       You can skip this module entirely and just use the native functions.
-[^2]: This is not entirely true.
-      Integration-testing verifies functional requirements and performance
-      is a non-functional requirement.
-      However, it is still preferable to do performance-testing at this level
-      rather than the unit-test level where it is entirely and undebatably
-      contra-indicated.
