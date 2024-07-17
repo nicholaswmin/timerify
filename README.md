@@ -275,7 +275,7 @@ npm run test:coverage
 [codeql-badge]: https://github.com/nicholaswmin/timerify/actions/workflows/codeql.yml/badge.svg
 [codeql-workflow]: https://github.com/nicholaswmin/timerify/actions/workflows/codeql.yml
 
-[size-report]: https://bundlephobia.com/package/@nicholaswmin/timerify@0.1.0
+[size-report]: https://bundlephobia.com/package/@nicholaswmin/timerify
 [size-badge]: https://img.shields.io/badge/size-950%20bytes-b.svg
 
 [hgram]: https://en.wikipedia.org/wiki/Histogram
