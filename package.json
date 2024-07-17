@@ -7,7 +7,8 @@
   "scripts": {
     "test": "NODE_ENV=test node --test test/index.spec.js",
     "test:coverage": "NODE_ENV=test node --test --experimental-test-coverage test/index.spec.js",
-    "checks": "npx eslint && npm audit && npx size-limit"
+    "checks": "npx eslint && npm audit && npx size-limit",
+    "prepare": "husky"
   },
   "engines": {
     "node": ">=19"
@@ -16,7 +17,9 @@
     {
       "path": "index.js",
       "limit": "0.95 kB",
-      "ignore": ["node:perf_hooks"]
+      "ignore": [
+        "node:perf_hooks"
+      ]
     }
   ],
   "repository": {
@@ -38,8 +41,11 @@
   },
   "homepage": "https://github.com/nicholaswmin/timerify#readme",
   "devDependencies": {
+    "@commitlint/cli": "^19.3.0",
+    "@commitlint/config-conventional": "^19.2.2",
     "@eslint/js": "^9.7.0",
     "@size-limit/preset-small-lib": "^11.1.4",
-    "globals": "^15.8.0"
+    "globals": "^15.8.0",
+    "husky": "^9.0.11"
   }
 }
