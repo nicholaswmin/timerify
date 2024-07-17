@@ -1,10 +1,10 @@
-[![test-workflow][test-badge]][test-workflow] [![coverage-workflow][coverage-badge]][coverage-report] [![test-workflow][size-badge]][size-report]
+[![test-workflow][test-badge]][test-workflow] [![coverage-workflow][coverage-badge]][coverage-report] [![codeql-workflow][codeql-badge]][codeql-workflow] [![size-report][size-badge]][size-report]
 
 # timerify
 
 tiny performance testing utility
 
-> uses native [Web Performance Timing APIs][web_perf_api][^1]
+> uses native [`PerformanceMeasurement APIs`][perf_hooks][^1]
 
 ## Usage
 
@@ -121,7 +121,7 @@ console.log(timed_foo.stats_ms)
 //  percentiles: {  '75': 4.02, '100': 4.03, '87.5': 4.03 }
 ```
 
-> both objects are variants of [`perf_hooks: Histogram`][node-hgram].
+> both objects are variants of [`perf_hooks: Histogram`][node_hgram].
 
 ### `timerified.reset()`
 
@@ -272,7 +272,10 @@ npm run test:coverage
 [coverage-badge]: https://coveralls.io/repos/github/nicholaswmin/timerify/badge.svg?branch=main
 [coverage-report]: https://coveralls.io/github/nicholaswmin/timerify?branch=main
 
-[size-report]: https://bundlephobia.com/package/@nicholaswmin/timerify@0.1.0
+[codeql-badge]: https://github.com/nicholaswmin/timerify/actions/workflows/codeql.yml/badge.svg
+[codeql-workflow]: https://github.com/nicholaswmin/timerify/actions/workflows/codeql.yml
+
+[size-report]: https://bundlephobia.com/package/@nicholaswmin/timerify
 [size-badge]: https://img.shields.io/badge/size-950%20bytes-b.svg
 
 [hgram]: https://en.wikipedia.org/wiki/Histogram
@@ -280,11 +283,9 @@ npm run test:coverage
 [stddev]: https://en.wikipedia.org/wiki/Standard_deviation
 [percentiles]: https://en.wikipedia.org/wiki/Percentile
 
-[web_perf_api]: https://w3c.github.io/perf-timing-primer/
 [perf_hooks]: https://nodejs.org/api/perf_hooks.html
-[node-hgram]: https://nodejs.org/api/perf_hooks.html#class-histogram
-[perf-timerify]: https://nodejs.org/api/perf_hooks.html#performancetimerifyfn-options
-[perf-observer]: https://nodejs.org/api/perf_hooks.html#class-performanceobserver
+[node_hgram]: https://nodejs.org/api/perf_hooks.html#class-histogram
+[perf_timerify]: https://nodejs.org/api/perf_hooks.html#performancetimerifyfn-options
 
 [fib]: https://en.wikipedia.org/wiki/Fibonacci_sequence
 [promise]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise
@@ -302,7 +303,8 @@ npm run test:coverage
 
 ## Footnotes
 
-[^1]: This module assembles 2 native `PerformanceMeasurement` utilities
-      (`performance.timerify`, `Histogram`) into an easier-to-use unit to
-      avoid repeated & elaborate test setups.
+[^1]: This module assembles 3 native [`PerformanceMeasurement`][perf_hooks]
+      utilities ([`performance.timerify`][perf_timerify] &
+      [`Histogram`][node_hgram]) into an easy-to-use unit which avoids
+      repeated & elaborate test setups.
       You can skip this module entirely and just use the native functions.
