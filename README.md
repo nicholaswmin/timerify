@@ -21,6 +21,7 @@ Instruments and returns a `function`.
 You then use the instrumented function, preferrably `n` times.
 
 > example: log the `mean` runtime duration from 3 runs of:
+
 > a [`fibonacci function`][fib] computing the 10th fibonacci number
 
 ```js
