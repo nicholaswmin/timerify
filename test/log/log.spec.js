@@ -1,9 +1,9 @@
 import { test } from 'node:test'
 import assert from 'node:assert'
 
-import { timerify, toRows } from '../../index.js'
+import { timerify, log } from '../../index.js'
 
-test('#toRows', async t => {
+test('#log', async t => {
   const rowKeys = ['count', 'min (ms)', 'mean (ms)', 'max (ms)','stddev (ms)']
 
   let fibonacciTimerified = null
@@ -20,8 +20,8 @@ test('#toRows', async t => {
   await t.test('passed a timerified function', async t => {
     let result = null
 
-    t.beforeEach(() => {
-      result = toRows(fibonacciTimerified)
+    t.beforeEach(async () => {
+      result = await log(fibonacciTimerified)
     })
 
     await t.test('returns an object', async t => {
@@ -63,7 +63,7 @@ test('#toRows', async t => {
 
       for (let i = 0; i < 5; i++) await sleepTimerified(10)
 
-      result = toRows([fibonacciTimerified, sleepTimerified])
+      result = await log([fibonacciTimerified, sleepTimerified])
     })
 
     await t.test('returns an object', async t => {

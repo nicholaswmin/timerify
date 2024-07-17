@@ -1,7 +1,7 @@
 {
   "name": "@nicholaswmin/timerify",
   "type": "module",
-  "version": "0.3.3",
+  "version": "0.4.0",
   "description": "tiny utility for measuring function performance",
   "main": "index.js",
   "scripts": {

@@ -1,4 +1,5 @@
 import { toMsKeys } from './numeric.js'
+import { isTimerifiedFunction } from './validate.js'
 
 const toRow = () =>
   (acc, timerified) => ({
@@ -9,4 +10,12 @@ const toRow = () =>
         )
     })
 
-export { toRow }
+const toRows = timerified => {
+  return Array.isArray(timerified)
+    ? timerified.map(isTimerifiedFunction)
+      .reduce(toRow(), {})
+    : [isTimerifiedFunction(timerified)]
+      .reduce(toRow(), {})
+}
+
+export { toRows }

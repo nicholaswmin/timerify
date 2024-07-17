@@ -146,15 +146,14 @@ console.log(timerified.histogram_ms.max)
 // 1.99
 ```
 
-### `toRows([fn,fn...])`
+### `log([fn,fn...])`
 
-returns a stats object which can be pretty-printed with
-[`console.table`][console-table].
+Pretty-prints the recorded durations of one or more timerified functions.
 
 > example: pretty-print the stats of `foo` and `bar`:
 
 ```js
-import { timerify, toRows } from '@nicholaswmin/timerify'
+import { timerify, log } from '@nicholaswmin/timerify'
 
 const foo = () => new Promise((resolve => setTimeout(resolve, 5)))
 const bar = () => new Promise((resolve => setTimeout(resolve, 15)))
@@ -168,13 +167,10 @@ for (let i = 0; i < 30; i++)
 for (let i = 0; i < 50; i++)
   await barTimerified()
 
-console.table(toRows([
-  fooTimerified,
-  barTimerified
-]))
+await log([ fooTimerified, barTimerified ])
 ```
 
-which logs:
+logs:
 
 ```console
 ┌────────────────┬───────┬──────────┬───────────┬──────────┬─────────────┐

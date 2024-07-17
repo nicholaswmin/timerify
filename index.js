@@ -1,7 +1,7 @@
 import { createHistogram } from 'node:perf_hooks'
-import { isFunction, isTimerifiedFunction } from './src/validate.js'
+import { isFunction } from './src/validate.js'
 import { nanoKeysToMs } from './src/numeric.js'
-import { toRow } from './src/to-row.js'
+import { toRows } from './src/to-row.js'
 
 const timerify = (fn, { histogram = createHistogram() } = {}) => {
   isFunction(fn)
@@ -36,15 +36,15 @@ const timerify = (fn, { histogram = createHistogram() } = {}) => {
   return timerified
 }
 
-const log = timerified =>
-  console.table(toRows(timerified))
+const log = async timerified => {
+  const rows = await toRows(timerified)
 
-const toRows = timerified => {
-  return Array.isArray(timerified)
-    ? timerified.map(isTimerifiedFunction)
-      .reduce(toRow(), {})
-    : [isTimerifiedFunction(timerified)]
-      .reduce(toRow(), {})
+  if (['test'].includes(process.env?.NODE_ENV))
+    return rows
+
+  return (['test'].includes(process.env?.NODE_ENV))
+    ? console.table(rows)
+    : rows
 }
 
-export { timerify, toRows, log }
+export { timerify, log }

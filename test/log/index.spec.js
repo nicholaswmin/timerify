@@ -1,2 +1,2 @@
 import './arguments.spec.js'
-import './to-rows.spec.js'
+import './log.spec.js'
