@@ -191,7 +191,7 @@ Just assert the result in any test runner using any assertion library
 > requires Node.js v22+
 
 ```js
-import test from 'node:test'
+import { test } from 'node:test'
 import { timerify } from '@nicholaswmin/timerify'
 
 const fibonacci = n => n < 1 ? 0 : n <= 2
@@ -199,7 +199,6 @@ const fibonacci = n => n < 1 ? 0 : n <= 2
 
 test('perf: #fibonacci(20) x 10 times', async t => {
   t.beforeEach(() => {
-    console.log('called')
     for (let i = 0; i < 10; i++)
       timed_fibonacci(20)
   })

@@ -1,4 +1,4 @@
-import test from 'node:test'
+import { test } from 'node:test'
 import { timerify } from '../../index.js'
 
 const fibonacci = n => n < 1 ? 0 : n <= 2
