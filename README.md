@@ -239,14 +239,18 @@ test('perf: #fibonacci(20) x 10 times', async t => {
 })
 ```
 
-### Caveats
-
-By definition, performance tests are [*non-deterministic*][indeterminacy].
-Their results are highly-dependent on uncontrollable environmental conditions.
-
 In the examples above, I specifically omit testing for the statistical
-`min`/`max`, opting instead for statistical `mean` and `deviation`.
-While more predictable, they are still environmentally-dependent variables.
+`min`/`max`, opting instead for `mean` and `deviation`.
+
+This is intentional. `min`/`max` times aren't useful metrics unless you're
+building a pacemaker or the chronometer that launches the Space Shuttle, in
+which case you probably wouldn't be looking at this page.
+They are also very susceptible to environmental events that are outside
+your control hence they can make your tests very brittle.
+
+Performance-testing shouldn't ever be included as part of unit-testing.
+At best my advice is to keep them around in a CI workflow and have them
+serve as [canaries][canaries] that you check every now and then.
 
 ## Tests
 
@@ -308,14 +312,15 @@ npm run test:coverage
 [node-test]: https://nodejs.org/api/test.html#test-runner
 [brittle]: https://softwareengineering.stackexchange.com/a/356238/108346
 [indeterminacy]: https://en.wikipedia.org/wiki/Indeterminacy_in_computation
+[canaries]: https://review.gale.com/2020/09/08/canaries-in-the-coal-mine/
 
 [nicholaswmin]: https://github.com/nicholaswmin
 [license]: ./LICENSE
 
 ## Footnotes
 
-[^1]: This module assembles 3 native [`PerformanceMeasurement`][perf_hooks]
-      utilities ([`performance.timerify`][perf_timerify] &
-      [`Histogram`][node_hgram]) into an easy-to-use unit which avoids
+[^1]: This module assembles native [`PerformanceMeasurement`][perf_hooks]
+      utilities such as [`performance.timerify`][perf_timerify] &
+      [`Histogram`][node_hgram] into an easy-to-use unit which avoids
       repeated & elaborate test setups.
       You can skip this module entirely and just use the native functions.
