@@ -1,4 +1,4 @@
-[![test-workflow][test-badge]][test-workflow] [![coverage-workflow][coverage-badge]][coverage-report] [![test-workflow][size-badge]][size-report]
+[![test-workflow][test-badge]][test-workflow] [![coverage-workflow][coverage-badge]][coverage-report] [![codeql-workflow][codeql-badge]][codeql-workflow] [![size-report][size-badge]][size-report]
 
 # timerify
 
@@ -271,6 +271,9 @@ npm run test:coverage
 
 [coverage-badge]: https://coveralls.io/repos/github/nicholaswmin/timerify/badge.svg?branch=main
 [coverage-report]: https://coveralls.io/github/nicholaswmin/timerify?branch=main
+
+[codeql-badge]: https://github.com/nicholaswmin/timerify/actions/workflows/codeql.yml/badge.svg
+[codeql-workflow]: https://github.com/nicholaswmin/timerify/actions/workflows/codeql.yml
 
 [size-report]: https://bundlephobia.com/package/@nicholaswmin/timerify@0.1.0
 [size-badge]: https://img.shields.io/badge/size-950%20bytes-b.svg
