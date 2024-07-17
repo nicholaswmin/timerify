@@ -132,7 +132,7 @@ console.log(timed_foo.stats_ms)
 //  percentiles: {  '75': 4.02, '100': 4.03, '87.5': 4.03 }
 ```
 
-> both objects are variants of [`perf_hooks: Histogram`][node_hgram].
+> both are derived from an internal [`perf_hooks: Histogram`][node_hgram].
 
 ### `timerified.reset()`
 
