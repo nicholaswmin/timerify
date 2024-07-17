@@ -36,7 +36,7 @@ const timerify = (fn, { histogram = createHistogram() } = {}) => {
   return timerified
 }
 
-const log = (timerified, { title = null }) => {
+const log = (timerified, { title = null } = {}) => {
   const rows = toRows(timerified)
 
   if (['test'].includes(process.env.NODE_ENV))
