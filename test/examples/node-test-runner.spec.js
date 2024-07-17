@@ -6,7 +6,10 @@ const fibonacci = n => n < 1 ? 0 : n <= 2
 
 const timed_fibonacci = timerify(fibonacci)
 
-test('perf: #fibonacci(20) x 10 times', async t => {
+test('perf: #fibonacci(20) x 10 times', {
+  skip: process.version.split('.')[0]?.replace('v', '') < 22 ?
+    't.assert only available on node v22+' : false
+}, async t => {
   t.beforeEach(() => {
     console.log('called')
     for (let i = 0; i < 10; i++)
