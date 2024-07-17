@@ -4,7 +4,7 @@
 
 tiny performance testing utility
 
-> uses native [Web Performance Timing APIs][web_perf_api][^1]
+> uses native [`PerformanceMeasurement APIs`][perf_hooks][^1]
 
 ## Usage
 
@@ -121,7 +121,7 @@ console.log(timed_foo.stats_ms)
 //  percentiles: {  '75': 4.02, '100': 4.03, '87.5': 4.03 }
 ```
 
-> both objects are variants of [`perf_hooks: Histogram`][node-hgram].
+> both objects are variants of [`perf_hooks: Histogram`][node_hgram].
 
 ### `timerified.reset()`
 
@@ -280,11 +280,9 @@ npm run test:coverage
 [stddev]: https://en.wikipedia.org/wiki/Standard_deviation
 [percentiles]: https://en.wikipedia.org/wiki/Percentile
 
-[web_perf_api]: https://w3c.github.io/perf-timing-primer/
 [perf_hooks]: https://nodejs.org/api/perf_hooks.html
-[node-hgram]: https://nodejs.org/api/perf_hooks.html#class-histogram
-[perf-timerify]: https://nodejs.org/api/perf_hooks.html#performancetimerifyfn-options
-[perf-observer]: https://nodejs.org/api/perf_hooks.html#class-performanceobserver
+[node_hgram]: https://nodejs.org/api/perf_hooks.html#class-histogram
+[perf_timerify]: https://nodejs.org/api/perf_hooks.html#performancetimerifyfn-options
 
 [fib]: https://en.wikipedia.org/wiki/Fibonacci_sequence
 [promise]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise
@@ -302,7 +300,7 @@ npm run test:coverage
 
 ## Footnotes
 
-[^1]: This module assembles 2 native `PerformanceMeasurement` utilities
-      (`performance.timerify`, `Histogram`) into an easier-to-use unit to
-      avoid repeated & elaborate test setups.
+[^1]: This module assembles 3 native `PerformanceMeasurement` utilities
+      ([`performance.timerify`][perf_timerify], [`Histogram`][node-hgram])
+      into an easier-to-use unit which avoids repeated & elaborate test setups.
       You can skip this module entirely and just use the native functions.
