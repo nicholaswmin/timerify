@@ -229,6 +229,10 @@ Their results are highly-dependent on uncontrollable environmental conditions.
 
 Incorrect usage will lead to [test brittleness][brittle].
 
+In the examples above, I specifically omit testing for the statistical
+`min`/`max`, opting instead for statistical `mean` and `deviation`.
+While more predictable, they are still environmentally-dependent variables.
+
 Because of these factors, it's only advisable to include them if
 circumstances or requirements *specifically* call for them and even then they
 should only be a part of integration-testing and above;
