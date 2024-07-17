@@ -2,8 +2,8 @@
 
 # timerify
 
-a tiny performance testing utility, built on top of
-native [`PerformanceMeasurement APIs`][perf_hooks][^1]
+> a tiny performance testing utility, built on top of
+> native [`PerformanceMeasurement APIs`][perf_hooks][^1]
 
 ## Usage
 
