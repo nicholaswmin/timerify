@@ -2,7 +2,7 @@
 
 # timerify
 
-tiny performance testing utility
+measure function execution time
 
 > uses native [`PerformanceMeasurement APIs`][perf_hooks][^1]
 
