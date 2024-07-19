@@ -75,7 +75,6 @@ Timerified functions contain recorded statistics in:
 
 `timerified.stats_ms`
 
-> expresses durations in [*milliseconds (ms)*][ms]
 
 #### Recorded values
 
