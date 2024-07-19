@@ -4,7 +4,7 @@
 
 measure function execution time
 
-> uses native [`PerformanceMeasurement APIs`][perf_hooks][^1]
+> like [`performance.timerify()`][timerify] but 5% more convienient.
 
 ## Usage
 
