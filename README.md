@@ -67,13 +67,11 @@ console.log(timed_sleep.stats_ms.mean)
 
 Timerified functions contain recorded statistics in:
 
-#### milliseconds
+#### [*nanoseconds (ns)*][ns]
 
 `timerified.stats_ns`
 
-> expresses durations in [*nanoseconds (ns)*][ns]
-
-#### nanoseconds
+#### [*milliseconds (ms)*][ms]
 
 `timerified.stats_ms`
 
