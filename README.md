@@ -4,7 +4,7 @@
 
 measure function execution time
 
-> like [`performance.timerify()`][perf_timerify] but 5% more convienient.
+> like [`performance.timerify()`][perf_timerify] but more convenient for testing
 
 ## Usage
 
