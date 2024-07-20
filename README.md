@@ -2,8 +2,9 @@
 
 # timerify
 
-> a tiny performance testing utility, built on top of
-> native [`PerformanceMeasurement APIs`][perf_hooks][^1]
+> like [`performance.timerify()`][perf_timerify] but:\
+> - time statistics are included in the instrumented function,
+> - metrics are both in [*milliseconds*][ms] and [*nanoseconds*][ns].
 
 ## Usage
 
@@ -67,17 +68,14 @@ console.log(timed_sleep.stats_ms.mean)
 
 Timerified functions contain recorded statistics in:
 
-#### milliseconds
+#### [*nanoseconds (ns)*][ns]
 
 `timerified.stats_ns`
 
-> expresses durations in [*nanoseconds (ns)*][ns]
-
-#### nanoseconds
+#### [*milliseconds (ms)*][ms]
 
 `timerified.stats_ms`
 
-> expresses durations in [*milliseconds (ms)*][ms]
 
 #### Recorded values
 
