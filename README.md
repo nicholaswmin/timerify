@@ -2,9 +2,9 @@
 
 # timerify
 
-measure function execution time
-
-> like [`performance.timerify()`][perf_timerify] but more convenient for testing
+> like [`performance.timerify()`][perf_timerify] but:
+> - metrics are included in the instrumented function
+> - metrics are in [*milliseconds*][ms] as well as [*nanoseconds*][ns].
 
 ## Usage
 
@@ -16,25 +16,26 @@ npm i @nicholaswmin/timerify
 
 ### `timerify(fn)`
 
-Instruments and returns a `function`.
+Instruments a `function` and returns it.
+You then use the instrumented function as usual & every time it's called,
+the function durations are logged.
 
-You then use the instrumented function, preferrably `n` times.
-
-> example: log the `mean` runtime duration from 3 runs of:
-
-> a [`fibonacci function`][fib] computing the 10th fibonacci number
+> example: log the `mean` runtime durations of a [`fibonacci function`][fib],
+> computing the 10th fibonacci number
 
 ```js
 import { timerify } from 'timerify'
 
+// function
 const fibonacci = n => n < 1 ? 0 : n <= 2
   ? 1 : fibonacci(n - 1) + fibonacci(n - 2)
 
+// same function but instrumented
 const timed_fibonacci = timerify(fibonacci)
 
-timed_fibonacci(10)  // recorded
-timed_fibonacci(10)  // recorded
-timed_fibonacci(10)  // recorded
+timed_fibonacci(10)  // recorded a run
+timed_fibonacci(10)  // recorded another
+timed_fibonacci(10)  // recorded another
 
 console.log(timed_fibonacci.stats_ms.count)
 // 3 (times called)
@@ -133,7 +134,7 @@ console.log(timed_foo.stats_ms)
 
 ### `timerified.reset()`
 
-`timerified.reset()` resets recorded stats.
+resets recorded stats to zero.
 
 > example: run `foo` 2 times, reset recorded stats to `0` & continue recording:
 
@@ -236,14 +237,19 @@ test('perf: #fibonacci(20) x 10 times', async t => {
 })
 ```
 
-### Caveats
-
-By definition, performance tests are [*non-deterministic*][indeterminacy].
-Their results are highly-dependent on uncontrollable environmental conditions.
-
 In the examples above, I specifically omit testing for the statistical
-`min`/`max`, opting instead for statistical `mean` and `deviation`.
-While more predictable, they are still environmentally-dependent variables.
+`min`/`max`, opting instead for `mean` and `deviation`.
+
+This is *intentional*. `min`/`max` times aren't useful metrics unless you're
+building a pacemaker or the chronometer that launches the Space Shuttle, in
+which case you probably wouldn't be looking at this page.
+They are also very susceptible to environmental events that are outside
+your control hence they can make your tests [brittle][brittle].
+
+Performance-testing shouldn't ever be included as part of unit-testing.
+At best my advice is to keep them around in a CI workflow and have them
+serve as performance regression [canaries][canaries] that you check
+every now and then.
 
 ## Tests
 
@@ -305,14 +311,15 @@ npm run test:coverage
 [node-test]: https://nodejs.org/api/test.html#test-runner
 [brittle]: https://softwareengineering.stackexchange.com/a/356238/108346
 [indeterminacy]: https://en.wikipedia.org/wiki/Indeterminacy_in_computation
+[canaries]: https://review.gale.com/2020/09/08/canaries-in-the-coal-mine/
 
 [nicholaswmin]: https://github.com/nicholaswmin
 [license]: ./LICENSE
 
 ## Footnotes
 
-[^1]: This module assembles 3 native [`PerformanceMeasurement`][perf_hooks]
-      utilities ([`performance.timerify`][perf_timerify] &
-      [`Histogram`][node_hgram]) into an easy-to-use unit which avoids
+[^1]: This module assembles native [`PerformanceMeasurement`][perf_hooks]
+      utilities such as [`performance.timerify`][perf_timerify] &
+      [`Histogram`][node_hgram] into an easy-to-use unit which avoids
       repeated & elaborate test setups.
       You can skip this module entirely and just use the native functions.
