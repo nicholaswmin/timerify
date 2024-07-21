@@ -20,7 +20,7 @@ Instruments a `function` and returns it.
 You then use the instrumented function as usual & every time it's called,
 the function durations are logged.
 
-> example: log the `mean` runtime durations of a `fibonacci function`,
+> example: log the `mean` runtime durations of a `fibonacci function`,  
 > computing the [10th fibonacci number][fib]
 
 ```js
@@ -66,7 +66,7 @@ console.log(timed_sleep.stats_ms.mean)
 
 ### Recorded data
 
-Timerified functions contain recorded statistics in:
+Timerified functions contain statistics in:
 
 #### [*nanoseconds (ns)*][ns]
 
@@ -76,8 +76,6 @@ Timerified functions contain recorded statistics in:
 
 `timerified.stats_ms`
 
-
-#### Recorded values
 
 Both contain the following:
 
