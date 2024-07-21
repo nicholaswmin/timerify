@@ -238,9 +238,12 @@ test('perf: #fibonacci(20) x 10 times', async t => {
 In the examples above, I specifically omit testing for the statistical
 `min`/`max`, opting instead for `mean` and `deviation`.
 
-This is *intentional*. `min`/`max` times aren't useful metrics unless you're
+This is *intentional*. 
+
+`min`/`max` times are not useful metrics unless you're
 building a pacemaker or the chronometer that launches the Space Shuttle, in
 which case you probably wouldn't be looking at this page.
+
 They are also very susceptible to environmental events that are outside
 your control hence they can make your tests [brittle][brittle].
 
