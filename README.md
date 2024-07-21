@@ -20,8 +20,8 @@ Instruments a `function` and returns it.
 You then use the instrumented function as usual & every time it's called,
 the function durations are logged.
 
-> example: log the `mean` runtime durations of a [`fibonacci function`][fib],
-> computing the 10th fibonacci number
+> example: log the `mean` runtime durations of a `fibonacci function`,
+> computing the [10th fibonacci number][fib]
 
 ```js
 import { timerify } from 'timerify'
