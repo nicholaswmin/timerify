@@ -16,7 +16,7 @@ npm i @nicholaswmin/timerify
 
 ### `timerify(fn)`
 
-Instruments a `function` and returns it.
+Instruments a `function` and returns it.  
 You then use the instrumented function as usual & every time it's called,
 the function durations are logged.
 
