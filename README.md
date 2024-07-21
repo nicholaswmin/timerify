@@ -317,10 +317,3 @@ npm run test:coverage
 [nicholaswmin]: https://github.com/nicholaswmin
 [license]: ./LICENSE
 
-## Footnotes
-
-[^1]: This module assembles native [`PerformanceMeasurement`][perf_hooks]
-      utilities such as [`performance.timerify`][perf_timerify] &
-      [`Histogram`][node_hgram] into an easy-to-use unit which avoids
-      repeated & elaborate test setups.
-      You can skip this module entirely and just use the native functions.
